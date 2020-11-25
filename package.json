@@ -1,23 +1,36 @@
 {
-  "name": "mutipages",
+  "name": "webpack-multi",
   "version": "1.0.0",
-  "description": "bootstrap of mutipages",
+  "description": "bootstrap of multi pages",
   "main": "index.js",
   "scripts": {
-    "build": "cross-env NODE_ENV=production webpack --config webpack.config.prod.js",
-    "dev": "cross-env NODE_ENV=development webpack-dev-server --hot --inline  --watch --host 0.0.0.0 --config webpack.config.dev.js"
+    "start": "cross-env NODE_ENV=dev webpack-dev-server --hot --watch --colors",
+    "build": "cross-env NODE_ENV=prod webpack -p",
+    "lint": "cross-env NODE_ENV=lint webpack-dev-server --open",
+    "serve": "http-server ./dist -p 8888 -o",
+    "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
     "type": "git",
     "url": ""
   },
-  "author": "215696013@qq.com",
   "license": "MIT",
   "dependencies": {
     "@babel/polyfill": "^7.6.0",
+    "autoprefixer": "^10.0.2",
     "cross-env": "^7.0.2",
+    "css-mqpacker": "^7.0.0",
+    "cssnano": "^4.1.10",
     "ejs-loader": "^0.3.5",
-    "normalize.css": "^8.0.0"
+    "node-sass": "^5.0.0",
+    "normalize.css": "^8.0.0",
+    "optimize-css-assets-webpack-plugin": "^5.0.4",
+    "postcss-import": "^13.0.0",
+    "postcss-nested": "^5.0.1",
+    "postcss-preset-env": "^6.7.0",
+    "postcss-reporter": "^7.0.1",
+    "prettier": "^2.2.0",
+    "sass-loader": "^10.1.0"
   },
   "devDependencies": {
     "babel-core": "^6.26.3",

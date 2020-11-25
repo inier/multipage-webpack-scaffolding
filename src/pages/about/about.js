@@ -1,6 +1,6 @@
 /* eslint-disable */
 import "@babel/polyfill";
-import './about.less';
+import './about.scss';
 console.log('11111');
 
 import imgUrl from '../../images/cat.jpeg';
