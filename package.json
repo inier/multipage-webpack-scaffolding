@@ -8,7 +8,8 @@
     "build": "cross-env NODE_ENV=prod webpack -p",
     "lint": "cross-env NODE_ENV=lint webpack-dev-server --open",
     "serve": "http-server ./dist -p 8888 -o",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "test:debug": "npm run start --inspect-brk test --runInBand --no-cache"
   },
   "repository": {
     "type": "git",
@@ -22,9 +23,12 @@
     "css-mqpacker": "^7.0.0",
     "cssnano": "^4.1.10",
     "ejs-loader": "^0.3.5",
+    "eslint-config-prettier": "^6.15.0",
+    "eslint-plugin-prettier": "^3.1.4",
     "node-sass": "^5.0.0",
     "normalize.css": "^8.0.0",
     "optimize-css-assets-webpack-plugin": "^5.0.4",
+    "portfinder": "^1.0.28",
     "postcss-import": "^13.0.0",
     "postcss-nested": "^5.0.1",
     "postcss-preset-env": "^6.7.0",

@@ -1,0 +1,22 @@
+# 忽略目录
+build/
+dist/
+tests/
+demo/
+/doc/
+/node_modules/
+/src/**/node_modules/
+/public/
+/src/assets/
+/.git
+/.vscode
+
+# node 覆盖率文件
+coverage/
+
+# 忽略文件
+**/*-min.js
+**/*.min.js
+/src/transport-layer/ResponseCode.js
+config-overrides.js
+serviceWorker.js

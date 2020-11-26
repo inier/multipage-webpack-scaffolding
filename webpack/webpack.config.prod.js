@@ -11,6 +11,7 @@ const OptimizeCssAssetsPlugin = require('optimize-css-assets-webpack-plugin');
 const webpackMerge = require('webpack-merge');
 const utils = require('./utils');
 
+const env = process.env.NODE_ENV;
 class ChunksFromEntryPlugin {
     apply(compiler) {
         compiler.hooks.emit.tap('ChunksFromEntryPlugin', (compilation) => {
@@ -111,9 +112,6 @@ let prodWebpackConfig = {
         new UglifyJsPlugin({
             sourceMap: true,
             parallel: true,
-        }),
-        new MiniCssExtractPlugin({
-            filename: 'static/css/[name].[hash:7].css',
         }),
     ],
     performance: {

@@ -3,8 +3,8 @@ import "@babel/polyfill";
 import './about.scss';
 console.log('11111');
 
-import imgUrl from '../../images/cat.jpeg';
-import svgUrl from '../../images/female.svg';
+import imgUrl from '@/assets/images/cat.jpeg';
+import svgUrl from '@/assets/images/female.svg';
 
 const img = document.createElement("img");
 img.style.width = "200px";

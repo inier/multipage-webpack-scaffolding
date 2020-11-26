@@ -1,12 +1,14 @@
-/* eslint-disable */
-const webpack = require('webpack');
+'use strict';
+
 const path = require('path');
+
+const webpack = require('webpack');
 const CleanWebpackPlugin = require('clean-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 
+const { srcPath, distPath, nodeModPath, publicPath, limit } = require('./config');
 const env = process.env.NODE_ENV;
-const srcPath = path.join(process.cwd(), './src');
-const distPath = path.join(process.cwd(), './dist/');
+const isDev = env === 'development';
 
 let webpackConfig = {
     // 配置入口
@@ -15,13 +17,19 @@ let webpackConfig = {
     output: {
         path: distPath,
         filename: 'static/js/[name].[hash:8].js',
-        publicPath: '/',
+        chunkFilename: 'static/js/[chunkhash:8].chunk.js',
+        publicPath: publicPath,
     },
     // 路径配置
     resolve: {
-        extensions: ['.js', '.json'],
+        extensions: ['.js', '.json', '.css', '.less', '.scss', '.tpl', '.ejs', '.html'],
         alias: {
             '@': srcPath,
+            _: `${srcPath}/assets/lib/loadsh.js`,
+            zepto: `${srcPath}/assets/lib/zepto.js`,
+            jquery: `${srcPath}/assets/lib/jquery.js`,
+            commonJS: `${srcPath}/assets/js/common.js`,
+            commonCSS: `${srcPath}/assets/css/common.css`,
         },
     },
     // loader配置
@@ -54,8 +62,8 @@ let webpackConfig = {
                 loader: 'html-withimg-loader',
                 include: [srcPath],
                 options: {
-                    limit: 10000,
-                    name: 'static/images/[name].[hash:7].[ext]',
+                    limit: limit.imageInHtml,
+                    name: 'static/images/[name].[hash:8].[ext]',
                 },
             },
             {
@@ -67,37 +75,37 @@ let webpackConfig = {
                 test: /\.(png|jpe?g|gif|svg)(\?.*)?$/,
                 loader: 'url-loader',
                 options: {
-                    limit: 10000,
-                    name: 'static/images/[name].[hash:7].[ext]',
+                    limit: limit.image,
+                    name: 'static/images/[name].[hash:8].[ext]',
                 },
             },
             {
                 test: /\.(mp4|webm|ogg|mp3|wav|flac|aac)(\?.*)?$/,
                 loader: 'url-loader',
                 options: {
-                    limit: 10000,
-                    name: 'static/media/[name].[hash:7].[ext]',
+                    limit: limit.media,
+                    name: 'static/media/[name].[hash:8].[ext]',
                 },
             },
             {
                 test: /\.(woff2?|eot|ttf|otf)(\?.*)?$/,
                 loader: 'url-loader',
                 options: {
-                    limit: 10000,
-                    name: 'static/fonts/[name].[hash:7].[ext]',
+                    limit: limit.font,
+                    name: 'static/fonts/[name].[hash:8].[ext]',
                 },
             },
             {
                 test: /\.css$/,
-                use: [env == 'development' ? 'style-loader' : MiniCssExtractPlugin.loader, 'css-loader'],
+                use: [isDev ? 'style-loader' : MiniCssExtractPlugin.loader, 'css-loader'],
             },
             {
                 test: /\.less$/,
-                use: [env == 'development' ? 'style-loader' : MiniCssExtractPlugin.loader, 'css-loader', 'less-loader'],
+                use: [isDev ? 'style-loader' : MiniCssExtractPlugin.loader, 'css-loader', 'less-loader'],
             },
             {
                 test: /\.(sass|scss)$/,
-                use: [env == 'development' ? 'style-loader' : MiniCssExtractPlugin.loader, 'css-loader', 'sass-loader'],
+                use: [isDev ? 'style-loader' : MiniCssExtractPlugin.loader, 'css-loader', 'sass-loader'],
             },
         ],
     },
@@ -106,19 +114,19 @@ let webpackConfig = {
         new webpack.ProvidePlugin({
             _: 'lodash',
         }),
-        // //设置每一次build之前先删除dist
+        // // 设置每一次build之前先删除dist
         // new CleanWebpackPlugin(
-        //     ['dist/*'], //匹配删除的文件
+        //     ['dist/*'], // 匹配删除的文件
         //     {
-        //         root: path.resolve(__dirname, '../'), //根目录
-        //         verbose: true, //开启在控制台输出信息
-        //         dry: false, //启用删除文件
+        //         root: path.resolve(__dirname, '../'), // 根目录
+        //         verbose: true, // 开启在控制台输出信息
+        //         dry: false, // 启用删除文件
         //     },
         // ),
         // 从js中提取css配置
         new MiniCssExtractPlugin({
-            filename: env == 'prod' ? 'css/[name].[contenthash:8].css' : '[name].css',
-            chunkFilename: env == 'prod' ? 'css/[name].[contenthash:8].css' : '[name].css',
+            filename: env == 'prod' ? 'static/css/[name].[contenthash:8].css' : '[name].css',
+            chunkFilename: env == 'prod' ? 'static/css/[name].[contenthash:8].css' : '[name].css',
             allChunks: true,
         }),
     ],

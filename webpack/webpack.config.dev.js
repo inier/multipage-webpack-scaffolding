@@ -2,16 +2,17 @@
  * 开发环境配置
  */
 
-const path = require('path');
+const chalk = require('chalk');
+
 const webpack = require('webpack');
+const WebpackDevServer = require('webpack-dev-server');
 const webpackMerge = require('webpack-merge');
-const config = require('./config');
+const { devServer, srcPath } = require('./config');
 const utils = require('./utils');
 // 引入基础配置文件
 const webpackBase = require('./webpack.config.base');
 
-// 合并配置文件
-module.exports = utils.pushHtmlWebpackPlugins(
+const webpackConfig = utils.pushHtmlWebpackPlugins(
     webpackMerge(webpackBase, {
         mode: 'development',
         devtool: 'source-map',
@@ -28,7 +29,7 @@ module.exports = utils.pushHtmlWebpackPlugins(
                 open: true,
                 hot: true,
                 before(_, server) {
-                    server._watch('../src/pages');
+                    server._watch(srcPath);
                 },
                 publicPath: '/',
                 historyApiFallback: true,
@@ -52,7 +53,47 @@ module.exports = utils.pushHtmlWebpackPlugins(
                     errorDetails: true,
                 },
             },
-            config.devServer,
+            devServer,
         ),
     }),
 );
+
+// const compiler = webpack(webpackConfig);
+// // 拿到 devServer 参数
+// const chainDevServer = compiler.options.devServer;
+// const server = new WebpackDevServer(compiler, Object.assign(chainDevServer, {}));
+
+// ['SIGINT', 'SIGTERM'].forEach((signal) => {
+//     process.on(signal, () => {
+//         server.close(() => {
+//             process.exit(0);
+//         });
+//     });
+// });
+
+// // 端口被占用的处理
+// const portFinder = require('portfinder');
+// portFinder.basePort = process.env.PORT || devServer.port;
+// portFinder.getPort((err, port) => {
+//     if (err) {
+//         reject(err);
+//     } else {
+//         // 在进程中存储下当前最新端口
+//         process.env.PORT = port;
+
+//         // 监听端口
+//         server.listen(port);
+//     }
+
+//     Promise.resolve(() => {
+//         compiler.hooks.done.tap('dev', (stats) => {
+//             const empty = '    ';
+//             const common = `start running at:
+//     - Local: http://127.0.0.1:${port}${publicPath}\n`;
+//             console.log(chalk.cyan(`\n${empty}${common}`));
+//         });
+//     });
+// });
+
+// 合并配置文件
+module.exports = webpackConfig;
