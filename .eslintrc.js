@@ -97,7 +97,7 @@ module.exports = {
         // 要求构造函数名以大写字母开头
         'new-cap': 'error',
         // 禁止使用 var
-        'no-var': 'error',
+        'no-var': 'warn',
         // 禁用__proto__属性
         'no-proto': 'error',
         // 检查循环条件内引用的变量是否在循环中被修改

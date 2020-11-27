@@ -3,7 +3,7 @@
  */
 const webpackBase = require('./webpack.config.base');
 const { merge } = require('webpack-merge');
-const config = require('./config');
+const { distPath } = require('./config');
 
 module.exports = merge(webpackBase, {
     module: {
@@ -25,7 +25,7 @@ module.exports = merge(webpackBase, {
         ],
     },
     devServer: {
-        contentBase: '../dist',
+        contentBase: distPath,
         overlay: {
             errors: true,
             warnings: true,

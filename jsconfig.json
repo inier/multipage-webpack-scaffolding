@@ -1,0 +1,16 @@
+{
+    "compilerOptions": {
+        "module": "commonjs",
+        "target": "es2015",
+        "jsx": "react",
+        "baseUrl": "src",
+        "paths": {
+            "@/*": ["*"],
+            "@*": ["*"]
+        },
+        "allowSyntheticDefaultImports": true,
+        "experimentalDecorators": true
+    },
+    "exclude": ["node_modules", "build"],
+    "include": ["src/**/*"]
+}

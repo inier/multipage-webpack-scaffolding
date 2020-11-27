@@ -5,7 +5,6 @@ tests/
 demo/
 /doc/
 /node_modules/
-/src/**/node_modules/
 /public/
 /src/assets/
 /.git

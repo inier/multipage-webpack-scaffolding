@@ -1,0 +1,19 @@
+# 忽略目录
+node_modules/
+public/
+build/
+dist/
+tests/
+demo/
+doc/
+style/
+
+# node 覆盖率文件
+coverage/
+
+# 忽略目录文件
+*.min.css
+*-min.css
+*.js
+*.jpg
+*.woff

@@ -1,1 +1,1 @@
-require('./footer.css')
+require('./footer.css');

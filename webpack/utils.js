@@ -6,7 +6,7 @@ const { pagePath } = require('./config');
 
 // 入口文件定义
 const entries = function () {
-    const entryFiles = glob.sync(pagePath + '/*/*.{js,jsx}');
+    const entryFiles = glob.sync(`${pagePath}/*/*.{js,jsx}`);
     const map = {};
 
     entryFiles.forEach((filePath) => {
@@ -24,7 +24,7 @@ exports.pushHtmlWebpackPlugins = (webpackConfig, options = {}) => {
     const entriesFiles = entries();
 
     if (Object.keys(entriesFiles).length) {
-        const entryTpl = glob.sync(pagePath + '/*/*.{ejs,tpl,html}');
+        const entryTpl = glob.sync(`${pagePath}/*/*.{ejs,tpl,html}`);
         webpackConfig.entry = entriesFiles;
 
         entryTpl.forEach((filePath) => {
@@ -35,7 +35,7 @@ exports.pushHtmlWebpackPlugins = (webpackConfig, options = {}) => {
 
             // 如果是ejs文件，启用ejs-loader编译
             if (['.tpl', '.ejs'].includes(path.extname(filePath))) {
-                template = `!!ejs-loader!${template}`;
+                template = `${template}`;
             }
 
             const conf = {
@@ -48,7 +48,6 @@ exports.pushHtmlWebpackPlugins = (webpackConfig, options = {}) => {
                 conf.inject = 'body';
                 conf.chunks = ['vendor', filename];
                 conf.inlineSource = '.(js|css)$';
-                conf.chunksSortMode = 'dependency';
             }
 
             webpackConfig.plugins.push(

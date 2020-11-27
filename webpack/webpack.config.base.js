@@ -1,23 +1,21 @@
 'use strict';
 
-const path = require('path');
-
 const webpack = require('webpack');
-const CleanWebpackPlugin = require('clean-webpack-plugin');
+// const CleanWebpackPlugin = require('clean-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 
-const { srcPath, distPath, nodeModPath, publicPath, limit } = require('./config');
+const { srcPath, distPath, nodeModPath, publicPath, staticPath, limit } = require('./config');
 const env = process.env.NODE_ENV;
 const isDev = env === 'development';
 
-let webpackConfig = {
+const webpackConfig = {
     // 配置入口
     entry: {},
     // 配置出口
     output: {
         path: distPath,
-        filename: 'static/js/[name].[hash:8].js',
-        chunkFilename: 'static/js/[chunkhash:8].chunk.js',
+        filename: `${staticPath}/js/[name].[hash:8].js`,
+        chunkFilename: `${staticPath}/js/[chunkhash:8].chunk.js`,
         publicPath: publicPath,
     },
     // 路径配置
@@ -25,9 +23,8 @@ let webpackConfig = {
         extensions: ['.js', '.json', '.css', '.less', '.scss', '.tpl', '.ejs', '.html'],
         alias: {
             '@': srcPath,
-            _: `${srcPath}/assets/lib/loadsh.js`,
-            zepto: `${srcPath}/assets/lib/zepto.js`,
-            jquery: `${srcPath}/assets/lib/jquery.js`,
+            _: `${srcPath}/assets/lib/lodash.js`,
+            jQuery: `${srcPath}/assets/lib/jquery.js`,
             commonJS: `${srcPath}/assets/js/common.js`,
             commonCSS: `${srcPath}/assets/css/common.css`,
         },
@@ -37,75 +34,106 @@ let webpackConfig = {
         rules: [
             {
                 test: /\.(js)$/,
-                loader: 'eslint-loader',
+                use: {
+                    loader: 'eslint-loader',
+                    options: {
+                        formatter: require('eslint-friendly-formatter'),
+                    },
+                },
                 enforce: 'pre',
                 include: [srcPath],
-                options: {
-                    formatter: require('eslint-friendly-formatter'),
-                },
+                exclude: /(node_modules|assets|server)/,
             },
             {
-                test: /\.(tpl|ejs)$/,
-                loader: 'ejs-loader',
-                include: [srcPath],
-                query: {
-                    variable: 'data',
-                    // mustache模板：
-                    // 具体参考lodash/underscore的template方法
-                    // interpolate : '\\{\\{(.+?)\\}\\}',
-                    // evaluate : '\\[\\[(.+?)\\]\\]'
+                test: /\.(ejs|tpl)$/,
+                use: {
+                    loader: 'ejs-loader',
+                    options: {
+                        variable: 'data',
+                        esModule: false,
+                        // mustache模板：
+                        // 具体参考lodash/underscore的template方法
+                        interpolate: '\\{\\{(.+?)\\}\\}',
+                        evaluate: '\\[\\[(.+?)\\]\\]',
+                    },
                 },
+                include: [srcPath],
+                exclude: /(node_modules|server)/,
             },
             // html中的img标签
             {
                 test: /\.html$/,
-                loader: 'html-withimg-loader',
-                include: [srcPath],
-                options: {
-                    limit: limit.imageInHtml,
-                    name: 'static/images/[name].[hash:8].[ext]',
+                use: {
+                    loader: 'html-withimg-loader',
+                    options: {
+                        limit: limit.imageInHtml,
+                        name: `${staticPath}/images/[name].[hash:8].[ext]`,
+                    },
                 },
+                include: [srcPath],
+                exclude: /(node_modules|server)/,
             },
             {
                 test: /\.js$/,
-                loader: 'babel-loader',
+                use: {
+                    loader: 'babel-loader',
+                },
                 include: [srcPath],
+                exclude: /(node_modules|assets|server)/,
             },
             {
                 test: /\.(png|jpe?g|gif|svg)(\?.*)?$/,
-                loader: 'url-loader',
-                options: {
-                    limit: limit.image,
-                    name: 'static/images/[name].[hash:8].[ext]',
+                use: {
+                    loader: 'url-loader',
+                    options: {
+                        limit: limit.image,
+                        name: `${staticPath}/images/[name].[hash:8].[ext]`,
+                    },
                 },
+                include: [srcPath],
+                exclude: /(node_modules|server)/,
             },
             {
                 test: /\.(mp4|webm|ogg|mp3|wav|flac|aac)(\?.*)?$/,
-                loader: 'url-loader',
-                options: {
-                    limit: limit.media,
-                    name: 'static/media/[name].[hash:8].[ext]',
+                use: {
+                    loader: 'url-loader',
+                    options: {
+                        limit: limit.media,
+                        name: `${staticPath}/media/[name].[hash:8].[ext]`,
+                    },
                 },
+                include: [srcPath],
+                exclude: /(node_modules|server)/,
             },
             {
                 test: /\.(woff2?|eot|ttf|otf)(\?.*)?$/,
-                loader: 'url-loader',
-                options: {
-                    limit: limit.font,
-                    name: 'static/fonts/[name].[hash:8].[ext]',
+                use: {
+                    loader: 'url-loader',
+                    options: {
+                        limit: limit.font,
+                        name: `${staticPath}/fonts/[name].[hash:8].[ext]`,
+                    },
                 },
+                include: [srcPath],
+                exclude: /(node_modules|server)/,
             },
             {
                 test: /\.css$/,
                 use: [isDev ? 'style-loader' : MiniCssExtractPlugin.loader, 'css-loader'],
+                include: [srcPath],
+                exclude: /(node_modules|server)/,
             },
             {
                 test: /\.less$/,
                 use: [isDev ? 'style-loader' : MiniCssExtractPlugin.loader, 'css-loader', 'less-loader'],
+                include: [srcPath],
+                exclude: /(node_modules|server)/,
             },
             {
                 test: /\.(sass|scss)$/,
                 use: [isDev ? 'style-loader' : MiniCssExtractPlugin.loader, 'css-loader', 'sass-loader'],
+                include: [srcPath],
+                exclude: /(node_modules|server)/,
             },
         ],
     },
@@ -125,8 +153,8 @@ let webpackConfig = {
         // ),
         // 从js中提取css配置
         new MiniCssExtractPlugin({
-            filename: env == 'prod' ? 'static/css/[name].[contenthash:8].css' : '[name].css',
-            chunkFilename: env == 'prod' ? 'static/css/[name].[contenthash:8].css' : '[name].css',
+            filename: env === 'prod' ? `${staticPath}/css/[name].[contenthash:8].css` : '[name].css',
+            chunkFilename: env === 'prod' ? `${staticPath}/css/[name].[contenthash:8].css` : '[name].css',
         }),
     ],
 };
