@@ -6,14 +6,14 @@ const chalk = require('chalk');
 
 const webpack = require('webpack');
 const WebpackDevServer = require('webpack-dev-server');
-const webpackMerge = require('webpack-merge');
+const { merge } = require('webpack-merge');
 const { devServer, srcPath } = require('./config');
 const utils = require('./utils');
 // 引入基础配置文件
 const webpackBase = require('./webpack.config.base');
 
 const webpackConfig = utils.pushHtmlWebpackPlugins(
-    webpackMerge(webpackBase, {
+    merge(webpackBase, {
         mode: 'development',
         devtool: 'source-map',
         // 插件

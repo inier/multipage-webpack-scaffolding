@@ -2,10 +2,10 @@
  * 代码检查环境配置
  */
 const webpackBase = require('./webpack.config.base');
-const webpackMerge = require('webpack-merge');
+const { merge } = require('webpack-merge');
 const config = require('./config');
 
-module.exports = webpackMerge(webpackBase, {
+module.exports = merge(webpackBase, {
     module: {
         rules: [
             {

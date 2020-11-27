@@ -8,7 +8,7 @@ const webpackBaseConfig = require('./webpack.config.base');
 const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
 // 优化打包css
 const OptimizeCssAssetsPlugin = require('optimize-css-assets-webpack-plugin');
-const webpackMerge = require('webpack-merge');
+const { merge } = require('webpack-merge');
 const utils = require('./utils');
 
 const env = process.env.NODE_ENV;
@@ -119,7 +119,7 @@ let prodWebpackConfig = {
     },
 };
 
-prodWebpackConfig = utils.pushHtmlWebpackPlugins(webpackMerge(webpackBaseConfig, prodWebpackConfig), {
+prodWebpackConfig = utils.pushHtmlWebpackPlugins(merge(webpackBaseConfig, prodWebpackConfig), {
     // html-webpack-plugin options
     minify: {
         removeComments: true,

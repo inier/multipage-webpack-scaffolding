@@ -127,7 +127,6 @@ let webpackConfig = {
         new MiniCssExtractPlugin({
             filename: env == 'prod' ? 'static/css/[name].[contenthash:8].css' : '[name].css',
             chunkFilename: env == 'prod' ? 'static/css/[name].[contenthash:8].css' : '[name].css',
-            allChunks: true,
         }),
     ],
 };
