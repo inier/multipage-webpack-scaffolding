@@ -41,13 +41,14 @@ exports.pushHtmlWebpackPlugins = (webpackConfig, options = {}) => {
             const conf = {
                 template: template,
                 filename: `${filename}.html`,
+                favicon: path.resolve(process.cwd(), 'favicon.ico'),
             };
 
             // 如果和入口js文件同名
             if (filename in entriesFiles) {
                 conf.inject = 'body';
                 conf.chunks = ['vendor', filename];
-                conf.inlineSource = '.(js|css)$';
+                // conf.inlineSource = '.(js|css)$';
             }
 
             webpackConfig.plugins.push(

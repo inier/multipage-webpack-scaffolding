@@ -90,6 +90,31 @@ yarn build
 
 ```
 
+## 开发相关
+
+### ejs 模板用法
+
+本项目使用的[ejs-compiled-loader](https://github.com/bazilio91/ejs-compiled-loader#htmlminify).
+
+-   需要传值时：
+
+```
+// 传值: require('xxx/xxx.ejs')()
+<%- require('xxx/xxx.ejs')({title: 'welcome'}) %>
+
+// 取值: {title: 'welcome'} 对应的key
+<title><%- title %></title>
+```
+
+-   不需要传值时：
+
+```
+<%- require('xxx/xxx.ejs')() %>
+// or
+<%- include xxx/xxx.ejs -%>
+```
+
+更多用法，[详情](https://github.com/mde/ejs/blob/master/docs/syntax.md)。
 ## 部署测试环境
 
 通过 docker 部署，下面分别介绍 docker 和 pm2 deploy

@@ -1,7 +1,8 @@
-import { data } from '@/data/data.js';
+const { data } = require('@/data/data.js');
+
 console.log(data);
 const inc = function (name, sendData) {
-    return require('@/components/' + name + '.ejs')(sendData ? { data: data } : null);
+    return require('@/components/' + name + '.ejs')(sendData ? { data: data } : {});
 };
 
 module.exports = inc;

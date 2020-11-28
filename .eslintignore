@@ -9,6 +9,7 @@ demo/
 /src/assets/
 /.git
 /.vscode
+*.ejs
 
 # node 覆盖率文件
 coverage/

@@ -1,16 +1,19 @@
 <!DOCTYPE html>
 <html>
+
 <head>
 	<!-- title -->
-	<% include ./includes/title.ejs %>
-	<!-- link -->
-	<% include ./includes/link.ejs %>
+	<%- require('@/components/title.ejs')({title: '404' }) -%>
+		<!-- link -->
+		<%- include ../../components/link.ejs -%>
 </head>
+
 <body>
-<div id="root">
-	<div class="trans-center animated backInRight">
-		<div class="404">Not Found.</div>
+	<div id="root">
+		<div class="trans-center animated backInRight">
+			<div class="status-404">Not Found.</div>
+		</div>
 	</div>
-</div>
 </body>
+
 </html>

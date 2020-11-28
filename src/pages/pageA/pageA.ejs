@@ -3,15 +3,18 @@
 
 <head>
   <meta charset="UTF-8">
-  <title>pageA</title>
+  <!-- title -->
+  <%- require('@/components/title.ejs')({title: 'pageA' }) -%>
+    <!-- link -->
+    <%- include ../../components/link.ejs -%>
 </head>
 
 <body class="page-a">
-  <%= require('commonJS')('header/header',true) %>
+  <%- require('commonJS')('header/header',true) %>
     <div class="">
       我是a页面
     </div>
-    <%= require('commonJS')('footer/footer',true) %>
+    <%- require('commonJS')('footer/footer',true) %>
 </body>
 
 </html>

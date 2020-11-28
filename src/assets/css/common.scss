@@ -1,3 +1,6 @@
+@import '@ozo/mixins-sass/src/default';
+@import './variables';
+
 html,
 body,
 h1,
@@ -27,7 +30,13 @@ input,
 button,
 textarea {
     font-family: 'Helvetica Neue', Helvetica, STHeiTi, sans-serif;
-    font-size: 0.28rem;
     border: none;
     outline: none;
+}
+
+.trans-center {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: transLate(-50%, -50%);
 }

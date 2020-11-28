@@ -75,7 +75,7 @@ export function setLink(className) {
 }
 
 /**
- * 节流函数，你懂的。
+ * 节流函数
  */
 export function throttle(action, delay) {
     let timeout = null;

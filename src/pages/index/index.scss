@@ -1,15 +1,6 @@
-@import '@/assets/less/common/common.less';
-
 html {
     background-color: #efefef;
     text-align: center;
-    .welcome {
-        margin: 10px auto;
-        font-size: @main-font-size;
-    }
-    .github {
-        font-size: @default-font-size;
-    }
     .link {
         margin: 0 4px;
         color: #007cff;
@@ -18,7 +9,6 @@ html {
         display: flex;
         justify-content: center;
         align-items: center;
-        font-size: 80px;
     }
     .logo {
         width: auto;
@@ -34,4 +24,31 @@ html {
         max-height: 120px;
         margin: 0 40px;
     }
+}
+
+.content {
+    display: flex;
+    flex-direction: column;
+}
+.test {
+    color: red;
+}
+.webpack {
+    background: url('@/assets/images/webpack.png') no-repeat center;
+    background-size: contain;
+    height: 150px;
+}
+.small-webpack {
+    background: url('@/assets/images/small-webpack.png') no-repeat center;
+    background-size: contain;
+    height: 25px;
+}
+.forward-a {
+    font-size: 20px;
+    cursor: pointer;
+}
+.forward-b {
+    font-size: 20px;
+    color: red;
+    cursor: pointer;
 }

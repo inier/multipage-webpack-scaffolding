@@ -1,5 +1,5 @@
-require('@/assets/css/pageA.css');
 const $ = require('jquery');
+require('./pageA.css');
 
 $('<div>这是jquery生成的多页面示例</div>').appendTo('body');
 

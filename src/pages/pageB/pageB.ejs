@@ -3,15 +3,18 @@
 
 <head>
   <meta charset="utf-8">
-  <title></title>
+  <!-- title -->
+  <%- require('@/components/title.ejs')({title: 'pageB' }) -%>
+    <!-- link -->
+    <%- include ../../components/link.ejs -%>
 </head>
 
 <body>
-  <%= require('commonJS')('header/header',true) %>
+  <%- require('commonJS')('header/header',true) %>
     <div class="b_v">
       我是b页面
     </div>
-    <%= require('commonJS')('footer/footer',true) %>
+    <%- require('commonJS')('footer/footer',true) %>
 </body>
 
 </html>

@@ -2,34 +2,18 @@
  * 生产环境配置
  */
 /* eslint-disable */
+const path = require('path');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const webpackBaseConfig = require('./webpack.config.base');
 // UglifyJsPlugin
 const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
+const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 // 优化打包css
 const OptimizeCssAssetsPlugin = require('optimize-css-assets-webpack-plugin');
 const { merge } = require('webpack-merge');
 const utils = require('./utils');
 
 const env = process.env.NODE_ENV;
-class ChunksFromEntryPlugin {
-    apply(compiler) {
-        compiler.hooks.emit.tap('ChunksFromEntryPlugin', (compilation) => {
-            compilation.hooks.htmlWebpackPluginAlterChunks.tap('ChunksFromEntryPlugin', (_, { plugin }) => {
-                // takes entry name passed via HTMLWebpackPlugin's options
-                const entry = plugin.options.entry;
-                const entrypoint = compilation.entrypoints.get(entry);
-
-                return entrypoint.chunks.map((chunk) => ({
-                    names: chunk.name ? [chunk.name] : [],
-                    files: chunk.files.slice(),
-                    size: chunk.modulesSize(),
-                    hash: chunk.hash,
-                }));
-            });
-        });
-    }
-}
 
 let prodWebpackConfig = {
     mode: 'production',
@@ -53,7 +37,7 @@ let prodWebpackConfig = {
                 uglifyOptions: {
                     compress: {
                         unused: true,
-                        warnings: false,
+                        // warnings: false,
                         drop_console: true,
                         drop_debugger: true,
                         reduce_vars: true,
@@ -109,6 +93,7 @@ let prodWebpackConfig = {
         },
     },
     plugins: [
+        new CleanWebpackPlugin(),
         new UglifyJsPlugin({
             sourceMap: true,
             parallel: true,
@@ -120,16 +105,7 @@ let prodWebpackConfig = {
 };
 
 prodWebpackConfig = utils.pushHtmlWebpackPlugins(merge(webpackBaseConfig, prodWebpackConfig), {
-    // html-webpack-plugin options
-    minify: {
-        removeComments: true,
-        collapseWhitespace: true,
-        removeAttributeQuotes: true,
-        // more options:
-        // https://github.com/kangax/html-minifier#options-quick-reference
-    },
+    minify: false,
 });
-
-prodWebpackConfig.plugins.push(new ChunksFromEntryPlugin());
 
 module.exports = prodWebpackConfig;

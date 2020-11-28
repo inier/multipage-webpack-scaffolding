@@ -5,23 +5,35 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
-  <title>Document</title>
+  <!-- title -->
+  <%- require('@/components/title.ejs')({title: 'index' }) -%>
+    <!-- link -->
+    <%- require('@/components/link.ejs')() -%>
 </head>
 
 <body>
-  <%- require('./components/header.ejs?')({ title: 'title' , desc: 'desc' }) %>
-
-    这里是主页，
-    <div class="test">css测试</div>
-    <a href="./about.html">关于我们</a>    
-    <a href="./welcome.html">welcome</a>
-    <a href="./home.html">home</a>
-    <a href="./demo.html">demo</a>
-    <a href="./404.html">404</a>
-    <a href="./pageA.html">pageA</a>
-    <a href="./pageB.html">pageB</a>
-    <a href="./contact.html">contact</a>
-    <a href="./polyfill.html">polyfill</a>
+  <!-- 引入头部组件 -->
+  <%- require('commonJS')('header/header',true) %>
+    <div id="root">
+      <div class="animated backInRight" style="margin-top: 250px">
+        <%- require('@/components/img.ejs')() -%>
+          <%- require('./components/webpack.ejs')() -%>
+      </div>
+      <div class="content">
+        <p style="margin: 20px 0 20px">这是首页</p>
+        <div class="test">css测试</div>
+        <a class="forward-a" href="/pageA.html">
+          页面A
+        </a>
+        <a class="forward-b" href="/pageB.html">
+          页面B
+        </a>
+        <a href="./about.html">关于我们</a>
+        <a href="./404.html">404</a>
+      </div>
+    </div>
+    <!-- 引入尾部组件 -->
+    <%- require('commonJS')('footer/footer',true) %>
 </body>
 
 </html>
