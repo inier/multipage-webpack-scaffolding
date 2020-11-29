@@ -4,7 +4,6 @@ const webpack = require('webpack');
 // const CopyWebpackPlugin = require('copy-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 
-
 const { srcPath, distPath, nodeModPath, publicPath, staticPath, limit } = require('./config');
 const env = process.env.NODE_ENV;
 const isDev = env === 'development';
@@ -24,8 +23,8 @@ const webpackConfig = {
         extensions: ['.js', '.json', '.css', '.less', '.scss', '.tpl', '.ejs', '.html'],
         alias: {
             '@': srcPath,
-            _: `${srcPath}/assets/lib/lodash.js`,
-            jQuery: `${srcPath}/assets/lib/jquery.js`,
+            _: `${srcPath}/assets/js/lodash.js`,
+            $: `${srcPath}/assets/js/jquery.js`,
             commonJS: `${srcPath}/assets/js/common.js`,
             commonCSS: `${srcPath}/assets/css/common.scss`,
         },
@@ -91,6 +90,7 @@ const webpackConfig = {
                 use: {
                     loader: 'html-withimg-loader',
                     options: {
+                        esModule: false,
                         limit: limit.imageInHtml,
                         name: `${staticPath}/images/[name].[hash:8].[ext]`,
                     },
@@ -136,6 +136,7 @@ const webpackConfig = {
                 use: {
                     loader: 'url-loader',
                     options: {
+                        esModule: false,
                         limit: limit.media,
                         name: `${staticPath}/media/[name].[hash:8].[ext]`,
                     },
@@ -148,6 +149,7 @@ const webpackConfig = {
                 use: {
                     loader: 'url-loader',
                     options: {
+                        esModule: false,
                         limit: limit.font,
                         name: `${staticPath}/fonts/[name].[hash:8].[ext]`,
                     },

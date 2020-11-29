@@ -1,4 +1,4 @@
-const { data } = require('@/data/data.js');
+const { data } = require('@/store/data.js');
 
 console.log(data);
 const inc = function (name, sendData) {

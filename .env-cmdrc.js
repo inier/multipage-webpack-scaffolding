@@ -3,16 +3,16 @@
 
 module.exports = {
     development: {
-        // NODE_ENV: 'development',
+        NODE_ENV: 'dev',
     },
     production: {
-        // NODE_ENV: 'production',
-        // BUNDLE_VISUALIZE: false,
+        NODE_ENV: 'prod',
     },
     debug: {
-        GENERATE_SOURCEMAP: true, // 开启SOURCEMAP
-        DROP_CONSOLE: false, // 不去除console
-        VCONSOLE: true, // 开启Vconsole
+        NODE_ENV: 'debug',
+    },
+    lint: {
+        NODE_ENV: 'lint',
     },
     test: {},
     uat: {

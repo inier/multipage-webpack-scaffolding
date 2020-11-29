@@ -1,0 +1,122 @@
+/*
+ * syalert.css
+ * Version - 1.0
+ * Copyright (c) 2019 sy
+ */
+@charset "utf-8";
+.sy-mask {
+    width: 100%;
+    height: 100%;
+    position: fixed;
+    background: rgba(0, 0, 0, 0.8);
+    left: 0;
+    top: 0;
+    z-index: 1000;
+}
+.sy-alert {
+    position: fixed;
+    display: none;
+    background: #fff;
+    border-radius: 5px;
+    overflow: hidden;
+    width: 300px;
+    max-width: 90%;
+    max-height: 80%;
+    left: 0;
+    right: 0;
+    margin: 0 auto;
+    z-index: 9999;
+    box-shadow: 0 0 15px #ddd;
+    &.animated {
+        -webkit-animation-duration: 0.3s;
+        animation-duration: 0.3s;
+    }
+    .sy-title {
+        height: 45px;
+        color: #333;
+        line-height: 45px;
+        font-size: 15px;
+        border-bottom: 1px solid #eee;
+        padding: 0 12px;
+    }
+    .sy-content {
+        padding: 20px;
+        text-align: center;
+        font-size: 14px;
+        line-height: 24px;
+        color: #666;
+        overflow-y: auto;
+    }
+    .sy-btn {
+        display: flex;
+        height: 50%;
+        border-top: 1px solid #eee;
+        overflow: hidden;
+        button {
+            flex: 1;
+            border: 0;
+            color: #333;
+            cursor: pointer;
+            background: #fff;
+            width: 50%;
+            line-height: 40px;
+            font-size: 15px;
+            text-align: center;
+            -webkit-appearance: none;
+            &:focus {
+                outline: 0;
+            }
+        }
+        button + button {
+            &:nth-child(1) {
+                color: #888;
+                border-right: 1px solid #eee;
+            }
+        }
+    }
+    &.sy-alert-alert {
+        .sy-btn button {
+            float: none;
+            width: 100%;
+        }
+    }
+    &.sy-alert-tips {
+        text-align: center;
+        width: 150px;
+        background: rgba(0, 0, 0, 0.7);
+        .sy-content {
+            padding: 8px;
+            color: #fff;
+            font-size: 14px;
+        }
+    }
+    &.sy-alert-modal {
+        .sy-content {
+            text-align: left;
+            .form {
+                .input-item {
+                    margin-bottom: 12px;
+                    position: relative;
+                    input {
+                        display: block;
+                        position: relative;
+                        width: 100%;
+                        border: 1px solid #eee;
+                        padding: 10px;
+                    }
+                    .getcode {
+                        border: 0;
+                        top: 0;
+                        right: 0;
+                        position: absolute;
+                        background: 0;
+                        line-height: 37px;
+                        color: #f60;
+                        width: 100px;
+                        text-align: center;
+                    }
+                }
+            }
+        }
+    }
+}

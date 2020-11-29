@@ -1,4 +1,21 @@
 /* eslint-disable */
+import { syAlert } from '@/assets/js/syAlert';
+
+/**
+ * 提示函数
+ * 禁止点击蒙层、显示一秒后关闭
+ */
+export const toast = (opts = {}) => {
+    if (typeof opts === 'string') {
+        syAlert.open({
+            content: opts,
+        });
+    } else {
+        syAlert.open({
+            ...opts,
+        });
+    }
+};
 
 /**
  * rem 相关的工具

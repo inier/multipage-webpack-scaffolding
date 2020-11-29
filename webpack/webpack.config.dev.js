@@ -36,8 +36,8 @@ const webpackConfig = utils.pushHtmlWebpackPlugins(
                 disableHostCheck: true,
                 // 错误、警告展示设置
                 overlay: {
-                    warnings: true,
-                    errors: true,
+                    warnings: false,
+                    errors: false,
                 },
                 // 配置在命令行中出现的提示信息
                 stats: {
