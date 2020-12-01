@@ -160,9 +160,11 @@ const webpackConfig = {
         ],
     },
     plugins: [
-        // 全局引入lodash
+        // 全局引入
         new webpack.ProvidePlugin({
             _: 'lodash',
+            jQuery: 'jquery',
+            $: 'jquery',
         }),
         // 从js中提取css配置
         new MiniCssExtractPlugin({

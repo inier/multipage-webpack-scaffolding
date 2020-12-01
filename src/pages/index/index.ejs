@@ -7,33 +7,36 @@
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
   <!-- title -->
   <%- require('@/components/title.ejs')({title: 'index' }) -%>
-    <!-- link -->
-    <%- require('@/components/link.ejs')() -%>
+  <!-- link -->
+  <%- require('@/components/link.ejs')() -%>
 </head>
 
 <body>
   <!-- 引入头部组件 -->
   <%- require('commonJS')('header/header',true) %>
-    <div id="root">
-      <div class="animated backInRight" style="margin-top: 250px">
-        <%- require('@/components/img.ejs')() -%>
-          <%- require('./components/webpack.ejs')() -%>
-      </div>
-      <div class="content">
-        <p style="margin: 20px 0 20px">这是首页</p>
-        <div class="test">css测试</div>
-        <a class="forward-a" href="/pageA.html">
-          页面A
-        </a>
-        <a class="forward-b" href="/pageB.html">
-          页面B
-        </a>
-        <a href="./about.html">关于我们</a>
-        <a href="./404.html">404</a>
-      </div>
+  <div id="root">
+    <div class="" id="js-caSiteNav">
+      <%- require('@/assets/js/jquery-FlexSlider/tpl_flexSlider.html') -%>
     </div>
-    <!-- 引入尾部组件 -->
-    <%- require('commonJS')('footer/footer',true) %>
+    <div class="animated backInRight" style="margin-top: 250px">
+      <%- require('@/components/img.ejs')() -%>
+      <%- require('./components/webpack.ejs')() -%>
+    </div>
+    <div class="content">
+      <p style="margin: 20px 0 20px">这是首页</p>
+      <div class="test">css测试</div>
+      <a class="forward-a" href="/pageA.html">
+        页面A
+      </a>
+      <a class="forward-b" href="/pageB.html">
+        页面B
+      </a>
+      <a href="./about.html">关于我们</a>
+      <a href="./404.html">404</a>
+    </div>
+  </div>
+  <!-- 引入尾部组件 -->
+  <%- require('commonJS')('footer/footer',true) %>
 </body>
 
 </html>

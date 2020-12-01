@@ -107,6 +107,7 @@ module.exports = {
         'no-console': 'off',
         // 禁止变量声明与外层作用域的变量同名：取消
         'no-shadow': 'off',
+        "no-unused-vars": 'off',
         // 禁止未使用过的表达式：取消，以此来支持a && a()的代码形式
         'no-unused-expressions': 'off',
         // 禁止变量定义前使用：警告, 函数除外

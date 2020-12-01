@@ -1,0 +1,59 @@
+/* ====================================================================================================================
+ * BASE STYLES
+ * ====================================================================================================================*/
+
+.flexslider {
+  position: relative;
+  margin: 0;
+  padding: 0;
+  zoom: 1;
+  .slides {
+    position: relative;
+    width: 100%;
+    zoom: 1;
+    > li {
+      display: none;
+      -webkit-backface-visibility: hidden;
+    }
+    img {
+      display: block;
+      width: 100%;
+      height: auto;
+      filter: progid:DXImageTransform.Microsoft.AlphaImageLoader(enabled=true);
+      -moz-user-select: none;
+    }
+    //
+    // Clearfix for the .slides element
+    //
+
+    &:after {
+      content: "\0020";
+      display: block;
+      clear: both;
+      visibility: hidden;
+      line-height: 0;
+      height: 0;
+    }
+
+    html[xmlns] & {
+      display: block;
+    }
+
+    * html & {
+      height: 1%;
+    }
+    //
+    // No JavaScript Fallback
+    // If you are not using another script, such as Modernizr, make sure you
+    // include js that eliminates this class on page load
+    //
+    .no-js & {
+      > li {
+        &:first-child {
+          display: block;
+          opacity: 1 !important;
+        }
+      }
+    }
+  }
+}

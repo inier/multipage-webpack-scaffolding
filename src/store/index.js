@@ -1,6 +1,7 @@
 import { toast } from '@/utils/utils';
 
 export default {
+    state: { token: '123123' },
     commit: (action, isShow) => {
         switch (action) {
             case 'changeNetwork': {

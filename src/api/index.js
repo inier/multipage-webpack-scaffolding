@@ -9,8 +9,4 @@ import activity from '@/api/activity';
 import common from '@/api/common';
 
 // 导出接口
-export default {
-    coupon,
-    activity,
-    common,
-};
+export { coupon, activity, common };

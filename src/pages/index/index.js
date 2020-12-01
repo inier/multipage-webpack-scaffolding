@@ -1,6 +1,6 @@
-import axios from 'axios';
-import $ from 'jquery';
 import _ from 'lodash';
+import '@/assets/js/jquery-FlexSlider';
+import { activity } from '@/api';
 import './index.scss';
 
 const isDev = process.env.NODE_ENV === 'development';
@@ -11,43 +11,42 @@ _.debounce(() => {
     $('<div>jquery生成的</div>').appendTo('.content');
 }, 3000)();
 
-async function welcome() {
-    const res = await sayHello();
-    console.log(res);
-}
+$(document).ready(() => {
+    window.jQuery = $;
+    activity
+        .activityList()
+        .then((res) => {
+            if (res.result === '0') {
+                let tDom = '';
+                let href = '';
+                // 渲染整图
+                _.each(res.data, (item) => {
+                    if (item.img) {
+                        if (item.href) {
+                            href = `href="${item.href}" target="_blank"`;
+                        }
+                        tDom += `<li class="slider-item"><a class="slider-item-img" ${href}><img src="${item.img}" alt="" /></a></li>`;
+                        href = '';
+                    }
+                });
+                tDom && $('#tSlides').html(tDom);
+            }
 
-function sayHello() {
-    return new Promise((resolve, reject) => {
-        setTimeout(() => {
-            resolve('hello world');
-        }, 2000);
-    });
-}
-
-welcome();
-
-if (isDev && module.hot) {
-    module.hot.accept();
-    /**
-     * 监听 hot module 完成事件，重新从服务端获取模板，替换掉原来的 document
-     * 这种热更新方式需要注意：
-     * 1. 如果你在元素上之前绑定了事件，那么热更新之后，这些事件可能会失效
-     * 2. 如果事件在模块卸载之前未销毁，可能会导致内存泄漏
-     * 3. 上述两个问题的解决方式，可以在 document.body 内容替换之前，将事件手动解绑。
-     */
-    module.hot.dispose(() => {
-        const href = window.location.href;
-        axios
-            .get(href)
-            .then((res) => {
-                const template = res.data;
-                document.body.innerHTML = template;
-            })
-            .catch((e) => {
-                console.error(e);
+            $('.flexslider', '#js-caSiteNav').flexslider({
+                animation: 'fade', // slide or fade
+                keyboard: false,
+                pauseOnAction: true, // Boolean: 用户操作时停止自动播放
+                pauseOnHover: true, // Boolean: 悬停时暂停自动播放
+                touch: true,
+                start: function (slider) {
+                    slider.parent().removeClass('no-js');
+                },
             });
-    });
-}
+        })
+        .catch((err) => {
+            console.log(err);
+        });
+});
 
 require('@/components/header/header.js'); // 引入header组件
 require('@/components/footer/footer.js'); // 引入footer组件

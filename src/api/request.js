@@ -72,6 +72,84 @@ const errorHandle = (status, other) => {
     }
 };
 
+/**
+ * @description 判断响应格式
+ * @param {*} headers 返回的响应头或请求头
+ * @param {*} type 请求类型, application/json：JSON数据格式,默认;application/octet-stream：二进制流数据（如常见的文件下载）
+ * @returns {boolean}
+ */
+export function checkContentType(headers = {}, type = 'application/json') {
+    if (!Object.keys(headers).length) {
+        console.log('header配置有误，', headers);
+        return false;
+    }
+
+    const contentType = headers.get('content-type') || '';
+
+    if (contentType.indexOf(type) >= 0) {
+        return true;
+    } else {
+        return false;
+    }
+}
+
+/**
+ * @description 接受接口的返回
+ * @param {*} res 返回的res
+ * @returns 返回的res
+ */
+const handleResponse = (res) => {
+    if (res && res.ok) {
+        const tHeader = res.headers;
+        if (!Object.keys(tHeader).length || checkContentType(tHeader, 'application/json')) {
+            return res.json();
+        } else if (checkContentType(tHeader, 'application/octet-stream')) {
+            return res;
+        } else {
+            return res.text();
+        }
+    } else {
+        const error = new Error(`请求失败！状态码：${res.status}，失败信息：${res.statusText}`);
+        error.response = res;
+        return Promise.reject(error);
+    }
+};
+
+/**
+ * @description 处理获取的结果
+ * 1.实现token自动刷新功能
+ * 2.实现自动根据api/ResponseCode中的错误信息显示
+ * @param {*} json 获取到的结果
+ * @param {*} url url
+ * @param {*} params 参数
+ * @param {*} opts 操作
+ * @returns 获取的数据
+ */
+function _handleData(json, url, params, opts) {
+    // 特殊格式（示例代码）
+    if (json && json.results !== null) {
+        return json;
+    }
+
+    if (!json || typeof json.result === 'undefined' || json.result === null) {
+        console.log(`数据格式不正确！`);
+        return {};
+    }
+
+    switch (json.result) {
+        // 获取数据成功
+        case '0': {
+            return json;
+        }
+
+        // 自动显示错误信息
+        default: {
+            console.log(`Requst is get Error,Code :${json.result}`);
+            return json;
+        }
+    }
+}
+
 // 请求拦截器
 instance.interceptors.request.use(
     (config) => {
@@ -92,7 +170,7 @@ instance.interceptors.request.use(
 instance.interceptors.response.use(
     (response) => {
         if (response.status === 200) {
-            return Promise.resolve(response);
+            return Promise.resolve(response.data);
         } else {
             return Promise.reject(response);
         }
